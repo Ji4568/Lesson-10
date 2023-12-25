@@ -37,6 +37,51 @@ grepl("you$", x)
 grepl("^h", x)
 grepl("h.*a", x)
 
+#正則表達式(4)
+#讓我們用正則表達式有效率的找出經緯度的位置吧！
+dat = readLines("102年9月.txt", encoding = "UTF-8")
+
+area.dat = grep("經緯度", dat, value = TRUE)
+lat.pos = gregexpr("[北南]緯[0-9]+度[0-9]+\\.*[0-9]*分", area.dat)
+lon.pos = gregexpr("[東西]經[0-9]+度[0-9]+\\.*[0-9]*分", area.dat)
+
+n.area = length(area.dat)
+lat.char = character(n.area)
+lon.char = character(n.area)
+
+for (i in 1:n.area) {
+  
+  lat.char[i] = substr(area.dat[i], lat.pos[[i]], lat.pos[[i]] + attr(lat.pos[[i]], "match.length") - 1)
+  lon.char[i] = substr(area.dat[i], lon.pos[[i]], lon.pos[[i]] + attr(lon.pos[[i]], "match.length") - 1)
+  
+}
+
+lat.char
+lon.char
+#字串取得後，文字轉數字就變得非常容易了，我們可以把單位切成3個部份：
+lat = numeric(n.area)
+lon = numeric(n.area)
+
+for (i in 1:n.area) {
+  
+  splited_lat = strsplit(lat.char[i], "度")[[1]]
+  splited_lat = gsub("[^0-9\\.]", "", splited_lat)
+  splited_lat = as.numeric(splited_lat)
+  lat[i] = splited_lat[1] + splited_lat[2] / 100 
+  if (grepl("南緯", lat.char[i])) {lat[i] = -lat[i]}
+  
+  splited_lon = strsplit(lon.char[i], "度")[[1]]
+  splited_lon = gsub("[^0-9\\.]", "", splited_lon)
+  splited_lon = as.numeric(splited_lon)
+  lon[i] = splited_lon[1] + splited_lon[2] / 100 
+  if (grepl("西經", lon.char[i])) {lon[i] = -lon[i]}
+  
+}
+
+lat
+lon
+
+
 
 
 
