@@ -27,6 +27,33 @@ nchar(x)
 tolower("aBcDe")
 toupper("aBcDe")
 
+#基本文字操作(2)
+#透過上述這些字串處理函數的組合，我們將可以做到許多神奇的事情，像是假設我們現在有一組email信箱，而你想要把其中的「@」之前的作為使用者帳號，那該怎麼辦呢?
+#這是第一種作法，使用函數「strsplit」做字串分割：
+emails = c("157373@mail.fju.edu.tw", "069201@mail.fju.edu.tw")
+n.account = length(emails)
+accounts = rep("", n.account)
+
+splited_emails = strsplit(emails, split = "@" , fixed = TRUE)
+
+for (i in 1:n.account) {
+  accounts[i] = splited_emails[[i]][1]
+}
+
+accounts
+#這是第二種作法，先使用函數「gregexpr」回傳「@」出現位置，再使用函數???substr???分離字串：
+emails = c("157373@mail.fju.edu.tw", "069201@mail.fju.edu.tw")
+
+n.account = length(emails)
+accounts = rep("", n.account)
+
+symbol_pos = gregexpr("@" , emails, fixed = TRUE)
+
+for (i in 1:n.account) {
+  accounts[i] = substr(emails[i], 1, symbol_pos[[i]][1] - 1)
+}
+
+accounts
 
 
 
