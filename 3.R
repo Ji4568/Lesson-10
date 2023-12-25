@@ -7,4 +7,15 @@ stringsim("abcde", "abcdfg", method = "cosine")
 library(stringdist)
 stringsim("abcd", "cabd", method = "cosine")
 
+#文字相似度與拼寫校正(2)
+#有了這個概念之後，我們就能理解如何做出拼寫校正了。
+#套件「hunspell」中的函數「hunspell」能快速的協助我們做出拼寫校正：
+library(hunspell)
+words = c("beer", "wiskey", "wine")
+correct = hunspell_check(words)
+hunspell_suggest(words)
+#至於他的字典在哪裡呢?我們可以在這裡找到：
+dictionary("en_US")
+
+
 
