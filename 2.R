@@ -22,3 +22,21 @@ gsub(" {1,}", " ", "nice to  meet   you.")
 ## [1] "+        :: {1, }   至少出現 1次, 最多無限多次"
 ## [1] "?        :: {0,1}   至少出現 0次, 最多出現 1次"
 gsub(" +", " ", "nice to  meet   you.")
+
+#正則表達式(3)
+#小括號則是用來描述延伸字串的寫法，像是我們可以用這種方式來編寫：
+x = c("medicine", "medical")
+grepl("medic(ine|al)", x)
+#除了「|」符號能拿來描述「or」之外，還有下面符號能使用
+## [1] "$        :: 字尾限定"
+## [1] "^        :: 字首限定"
+## [1] "|        :: \"ABC|EFG\" --> grep(\"ABC\"or\"DEF\",x)"
+## [1] ".        :: 任意字元"
+x = c("how are you", "hi Jack", "nice to meet you")
+grepl("you$", x)
+grepl("^h", x)
+grepl("h.*a", x)
+
+
+
+
